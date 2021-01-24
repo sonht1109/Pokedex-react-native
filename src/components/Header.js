@@ -33,6 +33,7 @@ const headerStyle = {
     height: 80,
     justifyContent: "center",
     alignItems: "center",
+    borderBottomWidth: 0,
 }
 
 export default CustomHeader
