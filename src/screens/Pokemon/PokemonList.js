@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { Avatar, ListItem, SearchBar } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { api } from '../../common/axios';
-import { PokemonsAPI } from '../../common/constants'
+import { BackgroundColor, PokemonsAPI } from '../../common/constants'
 import pokeballIcon from '../../../assets/images/pokeball.png'
 import { useNavigation } from '@react-navigation/native';
 import PokemonMove from '../../components/PokemonMove';
@@ -13,11 +13,15 @@ const PokemonList = () => {
 
     const [pokemons, setPokemons] = useState([])
     const [keyword, setKeyword] = useState("")
+    const [displayPokemons, setDisplayPokemons] = useState([])
     const navigation = useNavigation()
 
     useEffect(() => {
         api("GET", PokemonsAPI, null)
-            .then(res => setPokemons(res.data))
+            .then(res => {
+                setPokemons(res.data)
+                setDisplayPokemons(res.data.slice(0, 10))
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -32,9 +36,7 @@ const PokemonList = () => {
             <ListItem
                 bottomDivider={true}
                 onPress={() => navigation.navigate("PokemonDetail", {
-                    pokemon: pokemons.filter((pokemon) => {
-                        return pokemon.title_1.toLowerCase().includes(keyword.toLowerCase())
-                    })[index]
+                    pokemon: flatlistData()[index]
                 })}
             >
                 <Avatar
@@ -52,28 +54,43 @@ const PokemonList = () => {
         )
     }
 
+    const onGetData = () => {
+        setDisplayPokemons((prev) => {
+            let paging = prev.length
+            return prev.concat(pokemons.slice(paging, paging + 10))
+        })
+    }
+
+    const flatlistData = ()=> {
+        return keyword === "" ? displayPokemons : pokemons.filter((pokemon)=>{
+            return pokemon.title_1.toLowerCase().includes(keyword.toLowerCase())
+        })
+    }
+
     return (
         <View contentContainerStyle={styles.container}>
             <CustomHeader isMain={true} title="Pokemons" />
             <SearchBar
                 placeholder="Pokemon name..."
                 onChangeText={(text) => setKeyword(text)}
-                inputContainerStyle={{ backgroundColor: "#e9e9e9", height: 40}}
+                inputContainerStyle={{ backgroundColor: "#e9e9e9", height: 40 }}
                 containerStyle={{ backgroundColor: "white" }}
                 lightTheme={true}
                 round={true}
                 showLoading={true}
                 value={keyword}
-                style={{fontSize: 14}}
+                style={{ fontSize: 14 }}
             />
             <FlatList
-                data={pokemons.filter((pokemon) => {
-                    return pokemon.title_1.toLowerCase().includes(keyword.toLowerCase())
-                })}
+                data={flatlistData()}
                 keyExtractor={item => item.nid}
                 renderItem={renderItem}
                 initialNumToRender={10}
+                ListFooterComponent={displayPokemons.length === pokemons.length || keyword !== "" ? <View /> : <ActivityIndicator animating size="large" color={BackgroundColor} />}
+                ListFooterComponentStyle={{ height: 180 }}
+                onEndReached={onGetData}
             />
+
         </View>
     )
 }
@@ -81,9 +98,6 @@ const PokemonList = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1
-    },
-    listRow: {
-
     }
 })
 

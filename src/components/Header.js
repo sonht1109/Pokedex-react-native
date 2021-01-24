@@ -32,7 +32,7 @@ const CustomHeader = ({isMain, title, navigation})=> {
 const headerStyle = {
     height: 80,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
 }
 
 export default CustomHeader

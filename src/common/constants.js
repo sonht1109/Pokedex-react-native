@@ -25,6 +25,28 @@ const PokemonTypeIcon = {
   default: require("../../assets/images/type-normal.png"),
 };
 
+const PokemonTypeIconColor = {
+  bug: "#a3c332",
+  dark: "#626472",
+  dragon: "#0870c8",
+  electric: "#f4db4f",
+  fairy: "#ec94e4",
+  fighting: "#d84458",
+  fire: "#fca44c",
+  flying: "#98b1e3",
+  ghost: "#616dbc",
+  grass: "#5cbc59",
+  ground: "#da7f4f",
+  ice: "#7cd4c4",
+  normal: "#9a9ea1",
+  poison: "#b064cb",
+  psychic: "#fc948b",
+  rock: "#ccbd8c",
+  steel: "#548fa1",
+  water: "#519add",
+  default: "#9a9ea1",
+}
+
 const BackgroundColor = "#559EDF";
 
-export { PokemonsAPI, MovesAPI, PokemonTypeIcon, BackgroundColor };
+export { PokemonsAPI, MovesAPI, PokemonTypeIcon, BackgroundColor, PokemonTypeIconColor };
