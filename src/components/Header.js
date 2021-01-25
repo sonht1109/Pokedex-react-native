@@ -9,6 +9,14 @@ const CustomHeader = ({isMain, title, navigation, color = BackgroundColor})=> {
             centerComponent={{ text: title, style: { color: "#fff", fontWeight: "700",
             fontSize: 16 } }}
             containerStyle={{backgroundColor: color, ...headerStyle}}
+            leftComponent={
+                <Icon
+                name="menu-open"
+                color="white"
+                size={25}
+                onPress={()=>navigation.openDrawer()}
+                />
+            }
             />
         )
     }
