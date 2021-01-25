@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { api } from '../../common/axios';
 import { BackgroundColor, PokemonsAPI } from '../../common/constants'
 import pokeballIcon from '../../../assets/images/pokeball.png'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import PokemonMove from '../../components/PokemonMove';
 import CustomHeader from '../../components/Header';
 
@@ -15,6 +15,7 @@ const PokemonList = () => {
     const [keyword, setKeyword] = useState("")
     const [displayPokemons, setDisplayPokemons] = useState([])
     const navigation = useNavigation()
+    const {params} = useRoute()
 
     useEffect(() => {
         api("GET", PokemonsAPI, null)
@@ -24,6 +25,12 @@ const PokemonList = () => {
             })
             .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        if(params){
+            setKeyword(params.pokemonName)
+        }
+    }, [params])
 
     const renderMoves = (moves) => {
         return moves.map((move, index) => {

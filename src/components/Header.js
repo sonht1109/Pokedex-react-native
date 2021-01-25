@@ -2,13 +2,13 @@ import React from 'react'
 import { Header, Icon } from 'react-native-elements'
 import {BackgroundColor} from '../common/constants'
 
-const CustomHeader = ({isMain, title, navigation})=> {
+const CustomHeader = ({isMain, title, navigation, color = BackgroundColor})=> {
     if(isMain) {
         return(
             <Header
             centerComponent={{ text: title, style: { color: "#fff", fontWeight: "700",
             fontSize: 16 } }}
-            containerStyle={{backgroundColor: BackgroundColor, ...headerStyle}}
+            containerStyle={{backgroundColor: color, ...headerStyle}}
             />
         )
     }
@@ -23,7 +23,7 @@ const CustomHeader = ({isMain, title, navigation})=> {
                 onPress={()=> navigation.goBack()}
                 />
             }
-            containerStyle={{backgroundColor: BackgroundColor}}
+            containerStyle={{backgroundColor: color, ...headerStyle}}
             />
         )
     }
