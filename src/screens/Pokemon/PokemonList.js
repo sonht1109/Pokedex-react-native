@@ -90,7 +90,7 @@ const PokemonList = () => {
             />
             <FlatList
                 data={flatlistData()}
-                keyExtractor={item => item.nid}
+                keyExtractor={item => "pokemon" + item.nid}
                 renderItem={renderItem}
                 initialNumToRender={10}
                 ListFooterComponent={displayPokemons.length === pokemons.length || keyword !== "" ? <View /> : <ActivityIndicator animating size="large" color={BackgroundColor} />}

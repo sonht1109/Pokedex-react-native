@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { PokemonTypeIconColor } from '../../common/constants'
@@ -39,6 +39,18 @@ const PokemonDetail = () => {
     })
   }, [pokemon])
 
+  useLayoutEffect(() => {
+    const parent = navigation.dangerouslyGetParent()
+    parent.setOptions({
+      tabBarVisible: false
+    })
+    return ()=>{
+      parent.setOptions({
+        tabBarVisible: true
+      })
+    }
+  }, [navigation])
+
   const renderMoves = (moves) => {
     return moves.map((move, index) => {
       return (
@@ -52,7 +64,7 @@ const PokemonDetail = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: mainColor }}>
-      <CustomHeader isMain={false} navigation={navigation} color={mainColor} />
+      <CustomHeader isMain={false} color={mainColor} />
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.detail}>
           {/* avt */}

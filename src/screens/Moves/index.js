@@ -7,7 +7,8 @@ const Stack = createStackNavigator()
 
 const MoveScreen = ()=> {
     return(
-        <Stack.Navigator>
+        <Stack.Navigator
+        screenOptions={{headerShown: false}}>
             <Stack.Screen name="MoveList" component={MoveList} />
             <Stack.Screen name="MoveDetail" component={MoveDetail} />
         </Stack.Navigator>

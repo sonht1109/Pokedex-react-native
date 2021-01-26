@@ -1,22 +1,16 @@
 import React from 'react'
 import { Header, Icon } from 'react-native-elements'
 import {BackgroundColor} from '../common/constants'
+import { useNavigation } from '@react-navigation/native';
 
-const CustomHeader = ({isMain, title, navigation, color = BackgroundColor})=> {
+const CustomHeader = ({isMain, title, color = BackgroundColor})=> {
+    const navigation = useNavigation()
     if(isMain) {
         return(
             <Header
             centerComponent={{ text: title, style: { color: "#fff", fontWeight: "700",
             fontSize: 16 } }}
             containerStyle={{backgroundColor: color, ...headerStyle}}
-            leftComponent={
-                <Icon
-                name="menu-open"
-                color="white"
-                size={25}
-                onPress={()=>navigation.openDrawer()}
-                />
-            }
             />
         )
     }
