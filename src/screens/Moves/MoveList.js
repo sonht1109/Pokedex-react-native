@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Avatar, ListItem, SearchBar } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler'
 import { api } from '../../common/axios'
@@ -14,6 +14,7 @@ const MoveList = ()=> {
     const [moveKeyword, setMoveKeyword] = useState("")
     const [moves, setMoves] = useState([])
     const navigation = useNavigation()
+    const params = useRoute()
 
     useEffect(()=> {
         api("GET", MovesAPI, null)
@@ -22,17 +23,28 @@ const MoveList = ()=> {
         .catch(err => console.log(err))
     }, [])
 
+    useEffect(() => {
+        if(params.params){
+            if(params.params.move){
+                console.log(params.params);
+                setMoveKeyword(params.params.move)
+            }
+        }
+    }, [params.params])
+
     const filterMoves = ()=> {
         return moves.filter(move => {
             return move.title.toLowerCase().includes(moveKeyword.toLowerCase())
         })
     }
-    console.log(moves)
+
     const renderItem = ({item, index})=> {
         return(
             <ListItem
             bottomDivider
-            onPress={()=>navigation.navigate("MoveDetail")}
+            onPress={()=>navigation.navigate("MoveDetail", {
+                move: filterMoves()[index]
+            })}
             >
                 <Avatar source={PokemonTypeIcon[item.move_type.toLowerCase()]} size="medium" />
                 <ListItem.Content>

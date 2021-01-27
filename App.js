@@ -34,7 +34,7 @@ const App = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: BackgroundColor,
+          activeTintColor: "black",
         }}
       >
         <Tab.Screen

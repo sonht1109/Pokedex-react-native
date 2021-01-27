@@ -26,6 +26,8 @@ const PokemonDetail = () => {
   const moves = pokemon.field_pokemon_type.split(", ")
   const mainColor = PokemonTypeIconColor[moves[0].toLowerCase()]
   const evolutions = pokemon.field_evolutions.split(", ")
+  const moves1 = pokemon.field_primary_moves.split(", ")
+  const moves2 = pokemon.field_secondary_moves.split(", ")
 
   useEffect(() => {
     setValues((prev) => {
@@ -44,7 +46,7 @@ const PokemonDetail = () => {
     parent.setOptions({
       tabBarVisible: false
     })
-    return ()=>{
+    return () => {
       parent.setOptions({
         tabBarVisible: true
       })
@@ -54,7 +56,7 @@ const PokemonDetail = () => {
   const renderMoves = (moves) => {
     return moves.map((move, index) => {
       return (
-        <View style={{ margin: 10, alignItems: "center" }} key={move + index} >
+        <View style={{ margin: 20, alignItems: "center" }} key={move + index} >
           <PokemonMove move={move} />
           <Text style={{ fontSize: 12, fontWeight: "500", color: PokemonTypeIconColor[move.toLowerCase()] }}>{move}</Text>
         </View>
@@ -118,14 +120,44 @@ const PokemonDetail = () => {
           <View style={styles.skill}>
             <Text>Primary skills : </Text>
             <Text style={{ color: mainColor, flexWrap: 'wrap' }}>
-              {pokemon.field_primary_moves}
+              {moves1.map((move, index) => {
+                return (
+                  <Text
+                    style={{ color: mainColor, fontWeight: '700' }}
+                    key={"primarySkill" + index}
+                    onPress={() => navigation.navigate("MoveScreen", {
+                      screen: "MoveList",
+                      params: {
+                        move
+                      }
+                    })}
+                    >
+                    {move}{index !== moves1.length - 1 && ', '}
+                  </Text>
+                )
+              })}
             </Text>
           </View>
 
           <View style={styles.skill}>
             <Text>Secondary skills : </Text>
-            <Text style={{ color: mainColor, flexWrap: 'wrap' }}>
-              {pokemon.field_secondary_moves}
+            <Text style={{ flexWrap: 'wrap' }}>
+              {moves2.map((move, index) => {
+                return (
+                  <Text
+                    style={{ color: mainColor, fontWeight: '700' }}
+                    key={"secondSkill" + index}
+                    onPress={() => navigation.navigate("MoveScreen", {
+                      screen: "MoveList",
+                      params: {
+                        move
+                      }
+                    })}
+                  >
+                    {move}{index !== moves2.length - 1 && ', '}
+                  </Text>
+                )
+              })}
             </Text>
           </View>
 
@@ -136,11 +168,11 @@ const PokemonDetail = () => {
               {evolutions.map((e, index) => {
                 return (
                   <Text
-                  key={e + index}
-                  style={{ fontWeight: "700" }}
-                  onPress={() => navigation.navigate("PokemonList", {
-                    pokemonName: e
-                  })}
+                    key={e + index}
+                    style={{ fontWeight: "700" }}
+                    onPress={() => navigation.navigate("PokemonList", {
+                      pokemonName: e
+                    })}
                   >
                     {e}{index !== evolutions.length - 1 ? ', ' : ''}</Text>
                 )
