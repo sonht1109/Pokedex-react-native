@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     marginHorizontal: 20,
     paddingTop: 80,
-    paddingBottom: 40,
+    paddingBottom: 60,
     paddingHorizontal: 30
   },
   avatar: {
