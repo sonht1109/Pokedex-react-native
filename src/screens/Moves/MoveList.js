@@ -74,6 +74,7 @@ const MoveList = ()=> {
             ListFooterComponent={<View></View>}
             ListFooterComponentStyle={{height: 180}}
             keyExtractor={item => "move" + item.nid}
+            initialNumToRender={10}
             />
         </View>
     )

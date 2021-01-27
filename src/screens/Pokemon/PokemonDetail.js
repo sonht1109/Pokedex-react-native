@@ -14,7 +14,7 @@ const PokemonDetail = () => {
   const maxSTA = 500
   const maxATK = 500
   const maxDEF = 500
-  const maxCP = 6000
+  const maxCP = 8000
 
   const [values, setValues] = useState({
     sta: 0,
